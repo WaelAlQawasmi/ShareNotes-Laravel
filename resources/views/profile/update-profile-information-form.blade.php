@@ -101,7 +101,7 @@
             <!-- Name -->
             <div class="col-span-6 sm:col-span-4">
                 <x-jet-label for="bio" value="{{ __('Bio') }}" />
-                <textarea style="height: 10vh;" class="block mt-1 w-full" wire:model.defer="state.bio" utocomplete="bio" id="bio" cols="30" rows="10"></textarea>
+                <textarea style="height: 10vh;" class="block mt-1 w-full" wire:model.defer="state.bio" utocomplete="bio" id="bio" cols="20" rows="10"></textarea>
          
                 <x-jet-input-error for="name" class="mt-2" />
             </div>
