@@ -59,14 +59,14 @@
             <x-jet-input-error for="name" class="mt-2" />
         </div>
 
-            <!-- Name -->
+            <!-- Phone -->
             <div class="col-span-6 sm:col-span-4">
                 <x-jet-label for="name" value="{{ __('Phone') }}" />
                 <x-jet-input id="phone" type="text" class="mt-1 block w-full" wire:model.defer="state.phone" autocomplete="phone" />
                 <x-jet-input-error for="name" class="mt-2" />
             </div>
 
-                <!-- Name -->
+                <!-- Job -->
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label for="name" value="{{ __('Job') }}" />
             <x-jet-input id="Job" type="text" class="mt-1 block w-full" wire:model.defer="state.job" autocomplete="Job" />

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\notes;
+use App\Models\Team;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class NotesController extends Controller
 {
@@ -12,10 +14,19 @@ class NotesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+ 
+    public function __construct() {
+      
+    }
     public function index()
     {
-        //
+        $TeamNotes=notes::inRandomOrder()->get();
+    $userNotes=notes::where('creater',Auth::id())->get();
+    
+    return view('dashboard',['userNotes'=>$userNotes,'TeamNotes'=>$TeamNotes]);
     }
+
+  
 
     /**
      * Show the form for creating a new resource.
@@ -35,7 +46,8 @@ class NotesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        notes::create(['note_body'=>$request->note_body,'creater'=>Auth::user()->id]);
+       return redirect()->route('dashboard');
     }
 
     /**
@@ -78,8 +90,8 @@ class NotesController extends Controller
      * @param  \App\Models\notes  $notes
      * @return \Illuminate\Http\Response
      */
-    public function destroy(notes $notes)
+    public function destroies( $id)
     {
-        //
+        return redirect()->route('dashboard');
     }
 }
