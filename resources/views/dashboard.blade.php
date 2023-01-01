@@ -25,6 +25,7 @@
                     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
                     <link href="https://netdna.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet">
                     <script src="https://netdna.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+                    
                 </head>
                 <body>
                 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
@@ -35,7 +36,7 @@
                         <div class="profile-info-brief p-3"><img class="img-fluid user-profile-avatar" src="{{ Auth::user()->profile_photo_url }}" alt="">
                             <div class="text-center">
                                 <h5 class="text-uppercase mb-4">  {{ Auth::user()->currentTeam->name }}</h5>
-                                <p class="text-muted fz-base">I'm John Doe a web developer and software engineer. I studied computer science and software engineering.</p>
+                                <p class="text-muted fz-base">{{ Auth::user()->bio }}</p>
                             </div>
                         </div>
                         <!-- /.profile-info-brief -->
@@ -49,27 +50,22 @@
                                         <tr>
                                             <td><strong>URL:</strong></td>
                                             <td>
-                                                <p class="text-muted mb-0">Rathemes.com/inde.html</p>
+                                                <p class="text-muted mb-0">{{env('APP_URL', 'Laravel').'/'. Auth::user()->name}}</p>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td><strong>EMAIL:</strong></td>
                                             <td>
-                                                <p class="text-muted mb-0">rathemes@gmail.com</p>
+                                                <p class="text-muted mb-0">{{Auth::user()->email}}</p>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td><strong>PHONE:</strong></td>
                                             <td>
-                                                <p class="text-muted mb-0">01145525755</p>
+                                                <p class="text-muted mb-0">{{Auth::user()->phone}}</p>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td><strong>SKYPE:</strong></td>
-                                            <td>
-                                                <p class="text-muted mb-0">Rathemes</p>
-                                            </td>
-                                        </tr>
+                                       
                                     </tbody>
                                 </table>
                             </div>
@@ -82,25 +78,14 @@
                                         <tr>
                                             <td><strong>JOB:</strong></td>
                                             <td>
-                                                <p class="text-muted mb-0">Web Developer</p>
+                                                <p class="text-muted mb-0">{{Auth::user()->job}}</p>
                                             </td>
                                         </tr>
+                                        
                                         <tr>
-                                            <td><strong>POSITION:</strong></td>
+                                            <td><strong>Created at:</strong></td>
                                             <td>
-                                                <p class="text-muted mb-0">Team Manager</p>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>STUDIED:</strong></td>
-                                            <td>
-                                                <p class="text-muted mb-0">Computer Science</p>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>LAST SEEN:</strong></td>
-                                            <td>
-                                                <p class="text-muted mb-0">Yesterday 8:00 AM</p>
+                                                <p class="text-muted mb-0">{{explode(" ",Auth::user()->created_at)[0]}}</p>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -115,20 +100,85 @@
                     <div class="profile-section-main">
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs profile-tabs" role="tablist">
-                            <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#profile-overview" role="tab">Timeline</a></li>
+                            <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#Timeline" type="button" role="tab" aria-controls="Timeline" aria-selected="true">Timeline</button>
+                            <button class="nav-link " id="contact-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">profile</button>
+
                         </ul>
                         <!-- /.nav-tabs -->
                         <!-- Tab panes -->
                         <div class="tab-content profile-tabs-content">
-                            <div class="tab-pane active" id="profile-overview" role="tabpanel">
+                            <div >
+                                <form method="POST" action="{{ route('note.store')}}">
+                                    @csrf
                                 <div class="post-editor">
-                                    <textarea name="post-field" id="post-field" class="post-field" placeholder="Write Something Cool!"></textarea>
+                                    <textarea  name="note_body" id="post-field" class="post-field" placeholder="Write Something Cool!"></textarea>
                                     <div class="d-flex">
-                                        <button class="btn btn-success px-4 py-1">Post</button>
+                                        <button  type="submit" class="btn btn-success px-4 py-1">Post</button>
                                     </div>
                                 </div>
-                                <!-- /.post-editor -->
-                                <div class="stream-posts">
+                            </form>
+
+                            <div class="tab-content" id="pills-tabContent">
+                                 <!-- /.Timeline-->
+                                <div class="tab-pane fade show active" id="Timeline" role="tabpanel" aria-labelledby="Timeline-tab"> <div class="stream-post">
+                                    @foreach ( $TeamNotes as $item)
+                                    <div class="stream-post">
+                                        <div class="sp-author">
+                                            <a href="#" class="sp-author-avatar"><img src="{{$item->UserCreater->profile_photo_url}}" alt=""></a>
+                                            <h6 class="sp-author-name"><a href="#">{{$item->created_at}}</a></h6></div>
+                                        <div class="sp-content">
+                                            <div class="sp-info">{{$item->UserCreater->name}}</div>
+                                            <p class="sp-paragraph mb-0">{{$item->note_body}}</p>
+                                        </div>
+                                    </div>
+                                    @endforeach
+                                 <!-- /. ENd Timeline-->
+                            </div>
+                        </div>
+                                 {{-- user notes --}}
+                                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+                                    @foreach ($userNotes as $item)
+                                    <div class="stream-post">
+                                        <div class="sp-author">
+                                            <a href="#" class="sp-author-avatar"><img src="{{$item->UserCreater->profile_photo_url}}" alt=""></a>
+                                            <h6 class="sp-author-name"><a href="#">{{$item->created_at}}</a></h6>
+                                        
+                                        </div>
+                                      
+                                            <div class="sp-content">
+                                            <div class="sp-info">{{$item->UserCreater->name}}</div>
+                                            <p class="sp-paragraph mb-0">{{$item->note_body}}</p>
+
+                                            <div class="float-right btn-group btn-group-sm" style="position: absolute;bottom: 5px; right: 5px;">
+                                                <a href="#" class="btn btn-primary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil"></i> </a>
+                                               <form method="POST" aciton="{{ route('notesAction.destroies', $item->id)}}">  
+                                               {{-- <form method="POST" action="{{ route('note.store')}}"> --}}
+
+                                                 @csrf
+                                                 <button  type="submit" class="btn btn-success px-4 py-1">Post</button>
+
+                                                 {{-- <button  class="btn btn-secondary tooltips" type="submit" ><i class="fa fa-times"></i></button> --}}
+                                                </form>
+                                            </div>
+                                        </div>
+                                    
+
+                                       
+
+                                    </div>
+                                    @endforeach
+                                </div>
+                                  {{-- user notes end --}}
+                                
+                              </div>
+                        
+          
+                           
+
+                             
+                                <!-- /.Timeline-->
+                                {{-- <div class=" tab-pane fade show active" id="Timeline" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
                                     <div class="stream-post">
                                         <div class="sp-author">
                                             <a href="#" class="sp-author-avatar"><img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt=""></a>
@@ -185,7 +235,8 @@
                                         <!-- /.sp-content -->
                                     </div>
                                     <!-- /.stream-post -->
-                                </div>
+                                </div> --}}
+                                  <!-- /.Timeline end-->
                                 <!-- /.stream-posts -->
                             </div>
                         </div>
@@ -194,7 +245,7 @@
                     <!-- /.profile-section-main -->
                 </div>
                 </div>
-                
+                <script type="text/javascript" src="{{ URL::asset('js/app.js') }}"></script>
                 <style type="text/css">
                 .post-editor,
                 .stream-post {
@@ -511,9 +562,8 @@
                 }
                 </style>
                 
-                <script type="text/javascript">
-                
-                </script>
+                <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
                 </body>
                 </html>
 
@@ -521,4 +571,5 @@
             </div>
         </div>
     </div>
+
 </x-app-layout>

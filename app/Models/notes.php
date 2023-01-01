@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class notes extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'note_body',
+        'creater',
+    ];
+
+    public function UserCreater(){
+        return $this->belongsTo(User::class,'creater');
+    }
 }
