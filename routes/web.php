@@ -30,7 +30,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified']
    
 
 });
-Route::post('notesAction/deletees/', [NotesController::class,'destroies'])->name('notesAction.destroies');
+// Route::post('notesAction/deletees/', [NotesController::class,'destroies'])->name('notesAction.destroies');
 
 Route::controller(NotesController::class)->middleware(['auth:sanctum',config('jetstream.auth_session'),'verified']
 )->prefix('notes')->group(function(){

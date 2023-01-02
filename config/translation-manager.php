@@ -12,7 +12,7 @@ return [
     */
     'route'          => [
         'prefix'     => 'translations',
-        'middleware' => 'auth:sanctum',
+        // 'middleware' => ['auth:sanctum',config('jetstream.auth_session')],
     ],
 
     /**
