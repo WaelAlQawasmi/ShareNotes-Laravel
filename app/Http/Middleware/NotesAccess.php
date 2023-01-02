@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\notes;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -16,11 +17,13 @@ class NotesAccess
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->user()->id == $request->creater) {
+        $NoteCreator=notes::find($request->route('id'))->creater;
+      
+        if (auth()->user()->id == $NoteCreator) {
             return $next($request);
         }
-        abort(403);
-         return response()->json(['error' => ' Not  Authorized '], 403);
+       // abort(403);
+         return response()->json(['error' => ' Not  Authorized .. '], 403);
 
     }
 }

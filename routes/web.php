@@ -36,7 +36,8 @@ Route::controller(NotesController::class)->middleware(['auth:sanctum',config('je
 )->prefix('notes')->group(function(){
    
     Route::put('/update/{id}/', 'update')->name('note.update')->middleware('NotesAccess');
-   
+    Route::delete('/delete/{id}/', 'destroies')->name('note.delete')->middleware('NotesAccess');
+
 
     Route::post('/store','store')->name('note.store');
     Route::get('/index','index')->name('note.index');

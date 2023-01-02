@@ -91,7 +91,11 @@ class NotesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroies( $id)
-    {
+    { $Note=notes::find($id);
+        
+         $this->authorize('delete', $Note);
+          $Note->delete();
+
         return redirect()->route('dashboard');
     }
 }
