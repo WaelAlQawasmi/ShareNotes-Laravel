@@ -129,6 +129,22 @@
                                         <div class="sp-content">
                                             <div class="sp-info">{{$item->UserCreater->name}}</div>
                                             <p class="sp-paragraph mb-0">{{$item->note_body}}</p>
+                                            
+                                    @can('delete',$item)
+                                        
+                                   
+    
+
+                                            <div class="float-right btn-group btn-group-sm" style="position: absolute;bottom: 5px; right: 5px;">
+                                                <a href="#" class="btn btn-primary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil"></i> </a>
+                                               <form method="post" action="{{ route("note.delete",$item->id)}}">  
+                                                 @method('DELETE')
+                                                 @csrf
+                                                 <button  type="submit" class="btn   btn-secondary tooltips"> <i class="fa fa-times"></i></button>
+
+                                                </form>
+                                            </div>
+                                    @endcan
                                         </div>
                                     </div>
                                     @endforeach
@@ -137,7 +153,12 @@
                         </div>
                                  {{-- user notes --}}
                                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                  
 
+
+
+                                    
+ 
                                     @foreach ($userNotes as $item)
                                     <div class="stream-post">
                                         <div class="sp-author">
@@ -152,13 +173,11 @@
 
                                             <div class="float-right btn-group btn-group-sm" style="position: absolute;bottom: 5px; right: 5px;">
                                                 <a href="#" class="btn btn-primary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil"></i> </a>
-                                               <form method="POST" aciton="{{ route('notesAction.destroies', $item->id)}}">  
-                                               {{-- <form method="POST" action="{{ route('note.store')}}"> --}}
-
+                                               <form method="post" action="{{ route("note.delete",$item->id)}}">  
+                                                 @method('DELETE')
                                                  @csrf
-                                                 <button  type="submit" class="btn btn-success px-4 py-1">Post</button>
+                                                 <button  type="submit" class="btn   btn-secondary tooltips"> <i class="fa fa-times"></i></button>
 
-                                                 {{-- <button  class="btn btn-secondary tooltips" type="submit" ><i class="fa fa-times"></i></button> --}}
                                                 </form>
                                             </div>
                                         </div>
