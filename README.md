@@ -12,6 +12,8 @@
 - HTTP filter with middleware
 - Mailer to invitation and reset password
 - Input validation
+- Login, register via API
+- Access to data with authenticated API
 ## Technologies used
 - Laravel 9 , PHP 8.2 
 - Mysql DB
@@ -19,9 +21,10 @@
 
 
 ## Packages and libraries
--   jetstream
--  Laravel translation manager
--  Sanctum
+- Fortify
+- jetstream
+- Laravel translation manager
+- Sanctum
 ## images
 - To edit and show profile info
 ![img](img/profileInfo.png)
@@ -40,6 +43,16 @@
 ![img](img/ApiDone.png)
 - validation from api
 ![img](img/apiF.png)
+
+- Login validation
+
+![img](img/ApiCraduntionelError.png)
+![img](img/ApiEmilEror.png)
+- Success login
+![img](img/APILoginSersess.png)
+-  Authenticated API to get notes for user
+![img](img/APIgetNotes.png)
+
 
 
 

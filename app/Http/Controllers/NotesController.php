@@ -26,6 +26,13 @@ class NotesController extends Controller
     return view('dashboard',['userNotes'=>$userNotes,'TeamNotes'=>$TeamNotes]);
     }
 
+    public function indexApi()
+    {
+        $TeamNotes=notes::inRandomOrder()->get();
+    $userNotes=notes::where('creater',Auth::id())->get();
+    
+    return ['userNotes'=>$userNotes,'TeamNotes'=>$TeamNotes];
+    }
   
 
     /**
