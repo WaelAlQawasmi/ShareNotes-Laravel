@@ -15,12 +15,25 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
+// user profile routes
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+// get user sessions
+Route::middleware('auth:sanctum')->get('/sessions', function (Request $request) {
+    return $request->user()->tokens()->get();
+});
 
+
+// auth routes
 Route::post('/register',[CreateNewUser::class,'createViaApi']);
+//LOGOUT this token
+Route::middleware('auth:sanctum')->post('/logout', function (Request $request) {
+    return $request->user()->currentAccessToken()->delete();
+});
+Route::middleware('auth:sanctum')->post('/logout-all-sessions', function (Request $request) {
+    return $request->user()->tokens()->delete();
+});
 
 Route::post('/login',[CreateNewUser::class,'loginViaApi']);
 
