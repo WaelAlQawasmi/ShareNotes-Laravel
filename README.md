@@ -12,7 +12,7 @@
 - HTTP filter with middleware
 - Mailer to invitation and reset password
 - Input validation
-- Login, register via API
+- Login, register , show sessions and logout via API
 - Access to data with authenticated API
 ## Technologies used
 - Laravel 9 , PHP 8.2 
